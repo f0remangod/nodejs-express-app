@@ -5,7 +5,7 @@ const isValidId = (req, res, next) => {
   const isCorrectId = isValidObjectId(contactId);
 
   if (!isCorrectId) {
-    res.json({
+    res.status(400).json({
       status: "error",
       code: 400,
       message: "Requested contactId has incorrect format",
