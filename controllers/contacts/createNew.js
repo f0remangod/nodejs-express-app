@@ -4,10 +4,12 @@ const Contact = require("../../models/contacts/contact");
 
 const createNew = async (req, res, next) => {
   try {
+    const { _id } = req.user;
+
     const { error } = joiContactSchema.validate(req.body);
     if (error) {
       console.log(error);
-      res.json({
+      res.status(400).json({
         status: "error",
         code: 400,
         message: "Bad request",
@@ -15,7 +17,7 @@ const createNew = async (req, res, next) => {
       return;
     }
 
-    const result = await Contact.create(req.body);
+    const result = await Contact.create({ ...req.body, owner: _id });
 
     res.status(201).json({
       status: "success",

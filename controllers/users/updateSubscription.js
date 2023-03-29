@@ -1,20 +1,20 @@
-const { joiContactSchema } = require("../../validation/contacts");
-const Contact = require("../../models/contacts/contact");
+const { joiChangeUserSubscriptionSchema } = require("../../validation/users");
+const User = require("../../models/users/user");
 
-const editById = async (req, res, next) => {
+const updateSubscription = async (req, res, next) => {
   try {
-    const { error } = joiContactSchema.validate(req.body);
+    const { error } = joiChangeUserSubscriptionSchema.validate(req.body);
     if (error) {
       res.status(400).json({
         status: "error",
         code: 400,
-        message: "Bad request",
+        message: "Missing field subscription or value is not valid",
       });
       return;
     }
 
-    const { contactId } = req.params;
-    const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+    const { _id } = req.user;
+    const result = await User.findByIdAndUpdate(_id, req.body, {
       new: true,
     });
 
@@ -39,4 +39,4 @@ const editById = async (req, res, next) => {
   }
 };
 
-module.exports = editById;
+module.exports = updateSubscription;

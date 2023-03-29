@@ -7,7 +7,7 @@ const deleteById = async (req, res, next) => {
     const result = await Contact.findByIdAndRemove(contactId);
 
     if (!result) {
-      res.json({
+      res.status(404).json({
         status: "error",
         code: 404,
         message: "Not found",
