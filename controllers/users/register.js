@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const gravatar = require("gravatar");
-const { nanoid } = require("nanoid");
+const { v4: uuid } = require("uuid");
 const { sendEmail } = require("../../helpers");
 
 const { joiUserRegisterSchema } = require("../../validation/users");
@@ -36,7 +36,7 @@ const register = async (req, res, next) => {
 
     const hashedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
-    const verificationToken = nanoid();
+    const verificationToken = uuid();
 
     const result = await User.create({
       ...req.body,
