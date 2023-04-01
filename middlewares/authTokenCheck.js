@@ -4,12 +4,12 @@ const User = require("../models/users/user");
 
 const { SECRET_KEY } = process.env;
 
-const tokenCheck = async (req, res, next) => {
+const authTokenCheck = async (req, res, next) => {
   const { authorization = "" } = req.headers;
   const [bearer, token] = authorization.split(" ");
 
   try {
-    if (bearer !== "Bearer") {
+    if (bearer !== "Bearer" || !token) {
       res.status(401).json({ message: "Not authorized" });
       return;
     }
@@ -35,4 +35,4 @@ const tokenCheck = async (req, res, next) => {
   }
 };
 
-module.exports = tokenCheck;
+module.exports = authTokenCheck;

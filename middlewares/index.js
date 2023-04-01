@@ -1,4 +1,5 @@
 const isValidId = require("./isValidId");
-const tokenCheck = require("./tokenCheck");
+const authTokenCheck = require("./authTokenCheck");
+const upload = require("./upload");
 
-module.exports = { isValidId, tokenCheck };
+module.exports = { isValidId, authTokenCheck, upload };
